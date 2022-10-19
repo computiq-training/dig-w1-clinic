@@ -83,6 +83,7 @@ const getHistoryOfPatient = (req, res) => {
     }
 }
 
+
 module.exports = {
     getAllPatients,
     getPatientById,
