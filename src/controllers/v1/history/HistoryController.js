@@ -66,7 +66,7 @@ const history = [
 // Create history for given patient ID
 const createHistoryForP=(req, res)=>{
     const id = req.params.id;//patient
-    
+    // TO-DO
 }
 const getAllHistory = (req, res)=>{
     return res.status(200).json(success(200,history,"Success"))
