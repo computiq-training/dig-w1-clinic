@@ -33,7 +33,11 @@ const getAllPatients = (req, res) => {
 const getPatientById = (req, res) => {
     const id = req.params.id;
     let patient = patients.find(el => el.id == id);
-    return res.status(200).json(success(200, patient, "Success"))
+    if(patient){
+        return res.status(200).json(success(200, patient, "Success"))
+    }else{
+        return res.status(404).json(error(404, "Not Found"))
+    }
 }
 
 const deletePatient = (req, res) => {
@@ -70,8 +74,13 @@ const updatePatient = (req, res) => {
 
 const getHistoryOfPatient = (req, res) => {
     const id = req.params.id; 
-    history.filter(el => el.patient_id == id)
-    return res.status(200).json(success(200, history.find(el => el.patient_id == id), "Ok"))
+    var patientHistory = history.filter(el => el.patient_id == id)
+    if(patientHistory){
+
+        return res.status(200).json(success(200,patientHistory, "Ok"))
+    }else{
+        return res.status(404).json(error(404, "Not Found"))
+    }
 }
 
 module.exports = {
@@ -79,5 +88,6 @@ module.exports = {
     getPatientById,
     deletePatient,
     updatePatient,
-    getHistoryOfPatient
+    getHistoryOfPatient,
+    patients,
 }

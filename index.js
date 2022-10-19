@@ -3,7 +3,7 @@ const app = express()
 const patientsRouter = require('./src/routes/v1/patients')
 const historyRouter = require('./src/routes/v1/history')
 
-const PORT = 5000;
+const PORT = 5001;
 // middlwares
 app.use(express.json())
 
