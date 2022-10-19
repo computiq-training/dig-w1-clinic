@@ -1,7 +1,15 @@
 const express = require('express')
 const app = express()
 const patientsRouter = require('./src/routes/v1/patients')
+const historyRouter = require('./src/routes/v1/history')
+const bodyParser = require('body-parser')
 
+app.use(bodyParser.json())
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+)
 const PORT = 5000;
 // middlwares
 app.use(express.json())
@@ -14,5 +22,6 @@ app.get('/', (req, res)=>{
 // call routers
 
 app.use('/api/v1/patients',patientsRouter);
+app.use('/api/v1/history',historyRouter);
 
 app.listen(PORT)
