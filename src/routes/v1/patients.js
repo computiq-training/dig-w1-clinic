@@ -2,13 +2,18 @@ const express = require('express')
 
 const {getAllPatients, getPatientById, deletePatient, updatePatient, getHistoryOfPatient,createPatients} = require('../../controllers/v1/patients/PatientController')
 
-const router = express.Router()
+const patientsRouter = express.Router()
 
-router.get('/:id/history', getHistoryOfPatient);
+patientsRouter.get('/', getAllPatients);
+patientsRouter.post('/New-Post', createPatients);
 
-router.get('/', getAllPatients);
-router.get('/:id', getPatientById);
-router.delete('/:id', deletePatient);
-router.put('/:id', updatePatient);
-router.post('/New-Post', createPatients);
-module.exports = router;
+patientsRouter.route('/:id/history')
+.get(getHistoryOfPatient);
+
+patientsRouter.route('/:id')
+.get(getPatientById)
+.delete(deletePatient)
+.put(updatePatient);
+
+
+module.exports = patientsRouter;
