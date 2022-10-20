@@ -10,7 +10,7 @@ const patients = [
     phone: "+9647711332225",
   },
   {
-    id: 1,
+    id: 2,
     full_name: "Sara Ali",
     birth_date: "01/10/2000",
     gender: "female",
