@@ -65,16 +65,28 @@ const history = [
 // TO-DO
 // Create history for given patient ID
 const createHistoryForP=(req, res)=>{
-    const id = req.params.id;//patient
-    // TO-DO
+    const idPatient = req.params.id;//patient
+    let {date, report, prescription} = req.body
+    let newHistory = {
+
+        id:idPatient,
+        patient_id:idPatient,
+        date,
+        report,
+        prescription
+    };
+    history.push(newHistory)
+    res.status(201).json(success(201, newHistory, "Your History For Patient Created"))
+
 }
+
 const getAllHistory = (req, res)=>{
     return res.status(200).json(success(200,history,"Success"))
 }
 
 
-
 module.exports = {
     getAllHistory,
-    createHistoryForP
+    createHistoryForP,
+    history
 }
