@@ -1,4 +1,5 @@
 const {success, error} = require('../../../utils/responser')
+const {history} = require('../history/HistoryController')
 const patients = [
     {
         id:1,
@@ -9,7 +10,7 @@ const patients = [
         phone:"+9647711332225"
     },
     {
-        id:1,
+        id:2,
         full_name:"Sara Ali",
         birth_date:"01/10/2000",
         gender:"female",
@@ -26,34 +27,84 @@ const patients = [
     },
     
 ]
-const getAllPatients = (req, res)=>{
+exports.getAllPatients = (req, res)=>{
     return res.status(200).json(success(200,patients,"Success"))
 }
-const getPatientById = (req, res)=>{
+exports.getPatientById = (req, res)=>{
     const id = req.params.id;
-    // TO-DO
+
+    let patient = patients.find((ele)=> ele.id == id)
+    if(!patient)
+        res.status(404).json(error(404,"Your Patient Not Found"))
+    else
+        res.status(200).json(success(200, patient, "Your Patient Found"))
 }
 
-const deletePatient = (req, res)=>{
+exports.deletePatient = (req, res)=>{
     const id = req.params.id;
-    // TO-DO
+
+    let patientIndex = patients.findIndex((ele)=> ele.id == id)
+    if(patientIndex > -1)
+    {
+        patients.splice(patientIndex,1)
+        res.status(200).json(success(200, patients, `Patient Is${id} deleted...`))
+    }      
+    else{
+        res.status(404).json(error(404,"Your Patient Not Found Can't Delete..."))
+
+    }  
 }
 
-const updatePatient = (req, res)=>{
+exports.updatePatient = (req, res)=>{
     const id = req.params.id;
-    // TO-DO
+    const {full_name, birth_date, gender, code, phone} = req.body
+
+    let patientIndex = patients.findIndex((ele)=> ele.id == id)
+    if(patientIndex > -1)
+    {
+        let newPatient = {
+            id,
+            full_name,
+            birth_date,
+            gender,
+            code,
+            phone
+        };
+
+        patients[patientIndex] = newPatient;
+        res.status(200).json(success(200, patients, `Patient ${id} Updated...`))
+    }      
+    else{
+        res.status(404).json(error(404,"Patient Not Found Can't Updating..."))
+
+    } 
 }
 
-const getHistoryOfPatient = (req, res)=>{
-    const id = req.params.id; // patient id
-    // TO-DO
-    return res.status(200).json(success(200,{},"Ok"))
+exports.getHistoryOfPatient = (req, res)=>{
+    const patientId = req.params.id;
+    
+    var patientHistory = history.filter(el => el.patient_id == patientId)
+    if(patientHistory){
+
+        return res.status(200).json(success(200,patientHistory, "Ok"))
+    }else{
+        return res.status(404).json(error(404, "Not Found"))
+    }
+
 }
 
-module.exports = {
-    getAllPatients,
-    getPatientById,
-    deletePatient,
-    updatePatient,
-    getHistoryOfPatient
+exports.createPatients = (req, res)=>{
+    let {id, full_name, birth_date, gender, code, phone} = req.body
+    let newPatient = {
+        id,
+        full_name,
+        birth_date,
+        gender,
+        code,
+        phone
+    };
+    patients.push(newPatient)
+    res.status(201).json(success(201, newPatient, "Your Patient Created"))
+
 }
+

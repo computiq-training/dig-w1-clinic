@@ -1,13 +1,19 @@
 const express = require('express')
-const router = express.Router()
-const {getAllPatients, getPatientById, deletePatient, updatePatient, getHistoryOfPatient} = require('../../controllers/v1/patients/PatientController')
+
+const patientsFunctions = require('../../controllers/v1/patients/PatientController')
+
+const patientsRouter = express.Router()
+
+patientsRouter.get('/', patientsFunctions.getAllPatients);
+patientsRouter.post('/New-Post', patientsFunctions.createPatients);
+
+patientsRouter.route('/:id/history')
+.get(patientsFunctions.getHistoryOfPatient);
+
+patientsRouter.route('/:id')
+.get(patientsFunctions.getPatientById)
+.delete(patientsFunctions.deletePatient)
+.put(patientsFunctions.updatePatient);
 
 
-
-router.get('/', getAllPatients);
-router.get('/:id', getPatientById);
-router.delete('/:id', deletePatient);
-router.put('/:id', updatePatient);
-router.get('/:id/history', getHistoryOfPatient);
-// TO-DO // add endpoint for adding new Patient
-module.exports = router;
+module.exports = patientsRouter;
