@@ -45,11 +45,11 @@ const getPatientById = (req, res)=>{
 const deletePatient = (req, res)=>{
     const id = req.params.id;
     // TO-DO
-    let patientIndex = patients.findIndex((p)=> p.id == id)
-    if(patientIndex > -1)
+    let patientdelete = patients.findIndex((p)=> p.id == id)
+    if(patientdelete > -1)
     {
-        patients.splice(patientIndex,1)
-        res.status(200).json(success(200, patientIndex, `patient deleted`))
+        patients.splice(patientdelete,1)
+        res.status(200).json(success(200, patientdelete, `patient deleted`))
     }      
     else{
         res.status(404).json(error(404,"patient not deleted"))
@@ -68,7 +68,7 @@ const updatePatient = (req, res)=>{
 
     }else{
          patients.map((p)=>{
-            if(p.id == Number(id)){
+            if(p.id == id){
                 p.id = id
                 p.full_name = full_name
                 p.birth_date= birth_date
