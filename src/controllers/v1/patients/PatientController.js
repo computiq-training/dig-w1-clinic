@@ -27,10 +27,10 @@ const patients = [
     },
     
 ]
-const getAllPatients = (req, res)=>{
+exports.getAllPatients = (req, res)=>{
     return res.status(200).json(success(200,patients,"Success"))
 }
-const getPatientById = (req, res)=>{
+exports.getPatientById = (req, res)=>{
     const id = req.params.id;
 
     let patient = patients.find((ele)=> ele.id == id)
@@ -40,7 +40,7 @@ const getPatientById = (req, res)=>{
         res.status(200).json(success(200, patient, "Your Patient Found"))
 }
 
-const deletePatient = (req, res)=>{
+exports.deletePatient = (req, res)=>{
     const id = req.params.id;
 
     let patientIndex = patients.findIndex((ele)=> ele.id == id)
@@ -55,7 +55,7 @@ const deletePatient = (req, res)=>{
     }  
 }
 
-const updatePatient = (req, res)=>{
+exports.updatePatient = (req, res)=>{
     const id = req.params.id;
     const {full_name, birth_date, gender, code, phone} = req.body
 
@@ -80,7 +80,7 @@ const updatePatient = (req, res)=>{
     } 
 }
 
-const getHistoryOfPatient = (req, res)=>{
+exports.getHistoryOfPatient = (req, res)=>{
     const patientId = req.params.id;
     
     var patientHistory = history.filter(el => el.patient_id == patientId)
@@ -93,7 +93,7 @@ const getHistoryOfPatient = (req, res)=>{
 
 }
 
-const createPatients = (req, res)=>{
+exports.createPatients = (req, res)=>{
     let {id, full_name, birth_date, gender, code, phone} = req.body
     let newPatient = {
         id,
@@ -108,12 +108,3 @@ const createPatients = (req, res)=>{
 
 }
 
-
-module.exports = {
-    getAllPatients,
-    getPatientById,
-    deletePatient,
-    updatePatient,
-    getHistoryOfPatient,
-    createPatients
-}
