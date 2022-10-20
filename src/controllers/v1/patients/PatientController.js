@@ -1,4 +1,3 @@
-const { failed } = require("../../../../../project-0/src/responserApi");
 const { success, error } = require("../../../utils/responser");
 const { history } = require("../history/HistoryController");
 const patients = [
@@ -34,7 +33,7 @@ const getPatientById = (req, res) => {
   const id = req.params.id;
   let patient = patients.find((item) => item && item.id == id);
   if (!patient)
-    return res.status(404).json(failed(404, `patient with id ${id} not found`));
+    return res.status(404).json(error(404, `patient with id ${id} not found`));
   else return res.status(200).json(success(200, patient, `of for ${id}`));
 };
 
@@ -49,7 +48,7 @@ const deletePatient = (req, res) => {
         success(200, patients, `patient with id ${id} deleted successfully`)
       );
   } else
-    return res.status(404).json(failed(404, `patient with id ${id} not found`));
+    return res.status(404).json(error(404, `patient with id ${id} not found`));
 };
 
 const updatePatient = (req, res) => {
@@ -71,7 +70,7 @@ const updatePatient = (req, res) => {
         success(200, patients, `patient with id ${id} deleted successfully`)
       );
   } else
-    return res.status(404).json(failed(404, `patient with id ${id} not found`));
+    return res.status(404).json(error(404, `patient with id ${id} not found`));
 };
 
 const getHistoryOfPatient = (req, res) => {
@@ -79,7 +78,7 @@ const getHistoryOfPatient = (req, res) => {
   const patientHistory = history.find((item) => item.patient_id == id);
   if (patientHistory)
     return res.status(200).json(success(200, patientHistory, "Ok"));
-  else return res.status(204).json(failed(404, "not found"));
+  else return res.status(204).json(error(404, "not found"));
 };
 
 const createPatient = (req, res) => {
