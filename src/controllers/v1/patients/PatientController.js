@@ -47,7 +47,8 @@ const deletePatient = (req, res)=>{
             patients.splice(patientIndex,1)
             res.status(200).json(success(200, patients,"post deleted")) 
         }
-        
+        else{      return res.status(404).json(error(404, `patient with id ${id} can't deleted`));
+    }
     
 }
 
@@ -67,10 +68,11 @@ const updatePatient = (req, res) => {
     };
     
     patients[patientIndex] = updatePatient;
-    return res.status(200).json(success(200, patients, `patient with id ${id} deleted successfully`));
-    } else
+    if(updatePatient){
+    return res.status(200).json(success(200, patients, `patient with id ${id} deleted successfully`))};
+    } else{
       return res.status(404).json(error(404, `patient with id ${id} not found`));
-  };
+  }};
 
 
     const getHistoryOfPatient = (req, res) => {
@@ -79,7 +81,7 @@ const updatePatient = (req, res) => {
     if (patientHistory){
 
        return res.status(200).json(success(200, patientHistory, "Ok"));}
-    else return res.status(204).json(error(404, "not found"));
+    else{ return res.status(404).json(error(404, "not found"))};
   };
 
 
@@ -94,7 +96,13 @@ const updatePatient = (req, res) => {
         phone:req.body.phone
         };
         patients.push(patientcreate)
-        return res.status(200).json(success(200), patients,"patients  created")
+        if(patientcreate){
+            return res.status(200).json(success(200), patients,"patients  created")
+
+        }else{
+            return res.status(404).json(error(404, "sorry something error "))
+
+        }
     
     }
 

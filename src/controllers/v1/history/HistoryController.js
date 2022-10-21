@@ -76,7 +76,9 @@ const createHistoryForP=(req, res)=>{
         prescription: req.body.prescription
     };
     history.push(patientHistory)
-    return res.status(200).json(success(200), history,"patients history created")
+    if(patientHistory){
+    return res.status(200).json(success(200), history,"patients history created")}
+    else{return res.status(404).json(error(404, "can't created"))}
 }
 
 const getAllHistory = (req, res)=>{
