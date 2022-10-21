@@ -93,7 +93,7 @@ const updatePatient = (req, res) => {
         code:req.body.code,
         phone:req.body.phone
         };
-        history.push(patientcreate)
+        patients.push(patientcreate)
         return res.status(200).json(success(200), patients,"patients  created")
     
     }
