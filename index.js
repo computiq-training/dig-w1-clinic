@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const patientsRouter = require('./src/routes/v1/patients')
-
+const HistoryRouter=require('./src/routes/v1/history')
 const PORT = 5000;
 // middlwares
 app.use(express.json())
@@ -14,5 +14,5 @@ app.get('/', (req, res)=>{
 // call routers
 
 app.use('/api/v1/patients',patientsRouter);
-
+app.use('/api/v1/histories',HistoryRouter)
 app.listen(PORT)
