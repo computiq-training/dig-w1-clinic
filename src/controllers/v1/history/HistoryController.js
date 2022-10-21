@@ -75,7 +75,7 @@ const createHistoryOfPatient = (req, res)=>{
         prescription:prescription
         };
     history.push(newPatientHistory)
-    return res.status(201).json(success(201,history,`Patient ${id} History created`))
+    return res.status(201).json(success(201,newPatientHistory,`Patient ${id} History created`))
     
 }
 
