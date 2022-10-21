@@ -1,6 +1,15 @@
 const express = require('express')
 const app = express()
 const patientsRouter = require('./src/routes/v1/patients')
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://localhost:27017/clinic');
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected to db successfully");
+});
+
 
 const PORT = 5000;
 // middlwares
