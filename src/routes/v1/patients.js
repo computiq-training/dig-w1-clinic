@@ -9,5 +9,4 @@ router.get('/:id', getPatientById);
 router.delete('/:id', deletePatient);
 router.put('/:id', updatePatient);
 router.get('/:id/history', getHistoryOfPatient);
-// TO-DO // add endpoint for adding new Patient
 module.exports = router;

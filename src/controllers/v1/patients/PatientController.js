@@ -1,4 +1,5 @@
 const {success, error} = require('../../../utils/responser')
+const {history}=require('../history/HistoryController')
 const patients = [
     {
         id:1,
@@ -9,7 +10,7 @@ const patients = [
         phone:"+9647711332225"
     },
     {
-        id:1,
+        id:2,
         full_name:"Sara Ali",
         birth_date:"01/10/2000",
         gender:"female",
@@ -31,29 +32,79 @@ const getAllPatients = (req, res)=>{
 }
 const getPatientById = (req, res)=>{
     const id = req.params.id;
-    // TO-DO
-}
+    let patient=patients.find((item)=>item && item.id==id);
+    if(patient){
+        return res.status(200).json(success(200,patients,"Success"));
+    }
+    else {
+
+     return res.status(404).json(error(404, `patient with id ${id} not found`));
+    }
+};
 
 const deletePatient = (req, res)=>{
     const id = req.params.id;
-    // TO-DO
+    let deletePatientindex = patients.deletePatientindex((item)=>item && item.id == id)
+    if( deletePatientindex> -1)
+    {
+        patients.splice(deletePatientindex,1)
+        return res.status(200).json(success(200, patients, `Success Deleted Patient ID ${id}`)) 
+    }
+    else{
+        return res.status(404).json(error(404, `Not Found Patient ID ${id}`)) 
+    }
 }
 
 const updatePatient = (req, res)=>{
     const id = req.params.id;
-    // TO-DO
-}
+    let p = patients.findIndex( (item)=>item.id=id)
+    if (p > -1) {
+        let p2 = {
+            id:id,
+            full_name: req.body.full_name,
+            number: req.body.number,
+            gender: req.body.gender,
+            birth_date: req.body.birth_date,
+            code: req.body.code,
+           
+        }
+        patients[p] = p2;
 
+        return res.status(200).json(success(200, patients[p], "true"))
+    } else {
+        return res.status(404).json(error(404, "error"))
+    }
+}
 const getHistoryOfPatient = (req, res)=>{
     const id = req.params.id; // patient id
-    // TO-DO
-    return res.status(200).json(success(200,{},"Ok"))
+    const patientHistory=history.find((item)=>item.patient_id=id)
+    if( patientHistory){
+        return res.status(200).json(success(200,patientHistory,"Ok"))
+    }
+    else{
+        return res.status(404).json(error(404, "error"))
+    }
 }
+const createPatient = (req, res) => {
+    let p1 = {
+      id: req.body.id,
+      full_name: req.body.full_name,
+      number: req.body.number,
+      gender: req.body.gender,
+      birth_date: req.body.birth_date,
+      code: req.body.code,
+    };
+    patients.push(p1);
+return res.status(200).json(success(200, patients, `created successfully`));
+};   
+
 
 module.exports = {
     getAllPatients,
     getPatientById,
     deletePatient,
     updatePatient,
-    getHistoryOfPatient
+    getHistoryOfPatient,
+    createPatient
+
 }
