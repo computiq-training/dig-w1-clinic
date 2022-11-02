@@ -1,4 +1,6 @@
+const { report } = require('../../../routes/v1/patients');
 const {success, error} = require('../../../utils/responser')
+
 const history = [
     {
         id:1,
@@ -65,9 +67,20 @@ const history = [
 // TO-DO
 // Create history for given patient ID
 const createHistoryForP=(req, res)=>{
-    const id = req.params.id;//patient
-    // TO-DO
+    const id = req.params.id;
+    let patientHistory={
+        id: req.body.id,
+        patient_id: id,
+        date: req.body.date,
+        report: req.body.report,
+        prescription: req.body.prescription
+    };
+    history.push(patientHistory)
+    if(patientHistory){
+    return res.status(200).json(success(200), history,"patients history created")}
+    else{return res.status(404).json(error(404, "can't created"))}
 }
+
 const getAllHistory = (req, res)=>{
     return res.status(200).json(success(200,history,"Success"))
 }
@@ -76,5 +89,6 @@ const getAllHistory = (req, res)=>{
 
 module.exports = {
     getAllHistory,
-    createHistoryForP
+    createHistoryForP,
+    history
 }
