@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const patientsRouter = require('./src/routes/v1/patients')
+const historyRouter = require('./src/routes/v1/history')
 
 // Connecting to  MongoDB
 const mongoose = require('mongoose')
@@ -15,7 +16,7 @@ db.once('open', ()=>{
 })
 
 const PORT = 5000;
-// middlwares
+// middlewares
 app.use(express.json())
 
 // for testing
@@ -26,5 +27,6 @@ app.get('/', (req, res)=>{
 // call routers
 
 app.use('/api/v1/patients',patientsRouter);
+app.use('/api/v1/history',historyRouter);
 
 app.listen(PORT)
